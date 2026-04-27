@@ -49,7 +49,18 @@ sleep 1
 
 echo "Found TradingView at: $APP"
 echo "Launching with --remote-debugging-port=$PORT ..."
-"$APP" --remote-debugging-port=$PORT &
+
+# Snap-packaged TradingView (v3.x) ships a gnome-3-28-1804 content snap
+# that lacks Mesa drivers for modern GPUs (e.g. RDNA/Navi). On Wayland
+# sessions the bundled Electron also fails to connect to the compositor.
+# Fix: force the X11/Ozone backend so Electron uses XWayland instead.
+EXTRA_FLAGS=""
+if [ -n "$WAYLAND_DISPLAY" ]; then
+  echo "Wayland session detected — adding --ozone-platform=x11 (XWayland)"
+  EXTRA_FLAGS="--ozone-platform=x11"
+fi
+
+"$APP" --remote-debugging-port=$PORT $EXTRA_FLAGS &
 TV_PID=$!
 echo "PID: $TV_PID"
 
