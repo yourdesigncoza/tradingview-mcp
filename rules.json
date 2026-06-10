@@ -1,0 +1,7 @@
+{
+  "watchlist": ["FOREXCOM:XAUUSD", "OANDA:EURUSD", "OANDA:GBPUSD", "OANDA:USDJPY", "OANDA:AUDUSD"],
+  "timeframes": ["D", "240", "60"],
+  "default_indicators": ["Relative Strength Index", "Moving Average Exponential", "Bollinger Bands"],
+  "bias_thresholds": { "rsi_overbought": 70, "rsi_oversold": 30, "ema_fast": 21, "ema_slow": 50 },
+  "session": { "name": "London", "open_utc": "07:00", "close_utc": "16:00" }
+}
