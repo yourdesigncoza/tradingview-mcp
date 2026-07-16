@@ -43,8 +43,14 @@ if [ -z "$APP" ] || [ ! -f "$APP" ]; then
   exit 1
 fi
 
-# Kill any existing TradingView
-pkill -f "[Tt]rading[Vv]iew" 2>/dev/null
+# Kill any existing TradingView.
+# NB: match by EXACT process name (-x), never `-f "[Tt]rading[Vv]iew"` — a `-f` substring
+# match hits this script's own command line whenever the repo path contains "tradingview"
+# (e.g. .../tradingview-mcp/scripts/...), SIGTERM-ing the launcher itself before it can start
+# the app ("Terminated", exit 144). -x matches the /opt/TradingView/tradingview binary only.
+pkill -x "$(basename "$APP")" 2>/dev/null
+pkill -x tradingview 2>/dev/null
+pkill -x TradingView 2>/dev/null
 sleep 1
 
 echo "Found TradingView at: $APP"
