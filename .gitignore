@@ -4,5 +4,8 @@ scripts/current.pine
 temp_*
 *.log
 discovery-log.json
+# machine-specific MCP wiring (local)
 .mcp.json
 .playwright-mcp/
+# local trading config (upstream treats this as machine-specific)
+rules.json
